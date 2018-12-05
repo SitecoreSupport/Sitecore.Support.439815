@@ -121,7 +121,6 @@
     protected bool CheckReferenceForParams([NotNull] string renderedText, int tagStart)
     {
       Assert.ArgumentNotNull(renderedText, "renderedText");
-      renderedText = renderedText.Replace("&amp;", "&");
       int urlStartindex = renderedText.IndexOf("src", tagStart, StringComparison.OrdinalIgnoreCase) + 3;
       urlStartindex = renderedText.IndexOfAny(this.quotes, urlStartindex) + 1;
       int urlEndIndex = renderedText.IndexOfAny(this.quotes, urlStartindex);
@@ -134,7 +133,7 @@
       }
 
       // check if abusable parameters present
-      return ContainsUnsafeParametersInQuery(renderedText.Substring(paramIndex, urlEndIndex - paramIndex));
+      return ContainsUnsafeParametersInQuery(renderedText.Substring(paramIndex, urlEndIndex - paramIndex).Replace("&amp;", "&"));
     }
 
     /// <summary>
